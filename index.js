@@ -12,7 +12,7 @@ MongoClient.connect(
         useUnifiedTopology: true,
         poolSize: 50,
         useNewUrlParser: true,
-        writeConcerns: {
+        writeConcern: {
             wtimeout: 2500,
         },
 
