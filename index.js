@@ -7,7 +7,7 @@ const MongoClient = mongodb.MongoClient
 const port = process.env.PORT || 8000
 
 MongoClient.connect(
-    process.env.RESTREVIEWS_DB_URI,
+    process.env.TECHNOTES_DB_URI,
     {
         useUnifiedTopology: true,
         poolSize: 50,
