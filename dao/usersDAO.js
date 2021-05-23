@@ -104,5 +104,49 @@ export default class UsersDAO {
             }
           }
 
+          static async addUser(user, user, date) {
+            try {
+              const userDoc = { user: user.username,
+                  user_id: user._id,
+                  date: date,
+                  text: user,
+                   }
+        
+              return await users.insertOne(userDoc)
+            } catch (e) {
+              console.error(`Unable to post user: ${e}`)
+              return { error: e }
+            }
+          }
+        
+          static async updateUser(userId, userId, text, date) {
+            try {
+              const updateResponse = await users.updateOne(
+                { user_id: userId, _id: ObjectId(userId)},
+                { $set: { text: text, date: date  } },
+              )
+        
+              return updateResponse
+            } catch (e) {
+              console.error(`Unable to update user: ${e}`)
+              return { error: e }
+            }
+          }
+        
+          static async deleteUser(userId, userId) {
+        
+            try {
+              const deleteResponse = await users.deleteOne({
+                _id: ObjectId(userId),
+                user_id: userId,
+              })
+        
+              return deleteResponse
+            } catch (e) {
+              console.error(`Unable to delete user: ${e}`)
+              return { error: e }
+            }
+          }
+
 }
 

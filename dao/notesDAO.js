@@ -58,13 +58,13 @@ export default class NotesDAO {
         }
       }
 
-      static async addNote(restaurantId, user, note, date) {
+      static async addNote(user, note, date) {
         try {
-          const noteDoc = { name: user.name,
+          const noteDoc = { title: user.name,
               user_id: user._id,
               date: date,
               text: note,
-              restaurant_id: ObjectId(restaurantId), }
+              }
     
           return await notes.insertOne(noteDoc)
         } catch (e) {
