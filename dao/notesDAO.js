@@ -58,4 +58,48 @@ export default class NotesDAO {
         }
       }
 
+      static async addNote(restaurantId, user, note, date) {
+        try {
+          const noteDoc = { name: user.name,
+              user_id: user._id,
+              date: date,
+              text: note,
+              restaurant_id: ObjectId(restaurantId), }
+    
+          return await notes.insertOne(noteDoc)
+        } catch (e) {
+          console.error(`Unable to post note: ${e}`)
+          return { error: e }
+        }
+      }
+    
+      static async updateNote(noteId, userId, text, date) {
+        try {
+          const updateResponse = await notes.updateOne(
+            { user_id: userId, _id: ObjectId(noteId)},
+            { $set: { text: text, date: date  } },
+          )
+    
+          return updateResponse
+        } catch (e) {
+          console.error(`Unable to update note: ${e}`)
+          return { error: e }
+        }
+      }
+    
+      static async deleteNote(noteId, userId) {
+    
+        try {
+          const deleteResponse = await notes.deleteOne({
+            _id: ObjectId(noteId),
+            user_id: userId,
+          })
+    
+          return deleteResponse
+        } catch (e) {
+          console.error(`Unable to delete note: ${e}`)
+          return { error: e }
+        }
+      }
+
 }
