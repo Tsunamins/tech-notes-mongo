@@ -2,7 +2,7 @@ import UsersDAO from "../dao/usersDAO.js"
 
 export default class UsersController {
     static async apiGetUsers(req, res, next) {
-      const usersPerPage = req.query.usersPerPage ? parseInt(req.query.restaurantsPerPage, 10) : 20
+      const usersPerPage = req.query.usersPerPage ? parseInt(req.query.usersPerPage, 10) : 20
       const page = req.query.page ? parseInt(req.query.page, 10) : 0
   
       let filters = {}
@@ -30,7 +30,20 @@ export default class UsersController {
       res.json(response)
     }
 
-
+  static async apiGetUserById(req, res, next) {
+    try {
+      let id = req.params.id || {}
+      let user = await UsersDAO.getUserByID(id)
+      if (!user) {
+        res.status(404).json({ error: "Not found" })
+        return
+      }
+      res.json(user)
+    } catch (e) {
+      console.log(`api, ${e}`)
+      res.status(500).json({ error: e })
+    }
+  }
 
 
 }
