@@ -16,7 +16,7 @@ export default class UsersDAO {
       }
     }
 
-    // add a general get users, update later
+    // add a general get users, update later as will be searching for specific username, specific id, specific email more often
     static async getUsers({
         filters = null, 
         page = 0,
@@ -60,7 +60,49 @@ export default class UsersDAO {
           }
         }
 
-        
+    static async getUserByID(id) {
+            try {
+              const pipeline = [
+                {
+                    $match: {
+                        _id: new ObjectId(id),
+                    },
+                },
+                      {
+                          $lookup: {
+                              from: "notes",
+                              let: {
+                                  id: "$_id",
+                              },
+                              pipeline: [
+                                  {
+                                      $match: {
+                                          $expr: {
+                                              $eq: ["$user_id", "$$id"],
+                                          },
+                                      },
+                                  },
+                                  {
+                                      $sort: {
+                                          date: -1,
+                                      },
+                                  },
+                              ],
+                              as: "notes",
+                          },
+                      },
+                      {
+                          $addFields: {
+                              notes: "$notes",
+                          },
+                      },
+                  ]
+              return await users.aggregate(pipeline).next()
+            } catch (e) {
+              console.error(`Something went wrong in getUserByID: ${e}`)
+              throw e
+            }
+          }
 
 }
 
