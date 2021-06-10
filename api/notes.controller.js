@@ -32,17 +32,17 @@ export default class NotesController {
       
   static async apiPostNote(req, res, next) {
     try {
-     
+      const user_id = req.body.user_id
       const note = req.body.text
-      const noteInfo = {
-        name: req.body.name,
-        _id: req.body.user_id
-      }
+      // const noteInfo = {
+      //   name: req.body.name,
+      //   _id: req.body.user_id
+      // }
       const date = new Date()
 
       const NoteResponse = await NotesDAO.addNote(
      
-        userInfo,
+        user_id,
         note,
         date,
       )
@@ -54,14 +54,14 @@ export default class NotesController {
 
   static async apiUpdateNote(req, res, next) {
     try {
-      const noteId = req.body.note_id
-      const text = req.body.text
+      const note_id = req.body.note_id
+      const note = req.body.text
       const date = new Date()
 
       const noteResponse = await NotesDAO.updateNote(
-        noteId,
+        note_id,
         req.body.user_id,
-        text,
+        note,
         date,
       )
 
@@ -84,12 +84,12 @@ export default class NotesController {
 
   static async apiDeleteNote(req, res, next) {
     try {
-      const noteId = req.query.id
-      const userId = req.body.user_id // he adds this as a mock authentication - not a best practice just for building
+      const note_id = req.query.id
+      const user_id = req.body.user_id // he adds this as a mock authentication - not a best practice just for building
       console.log(noteId)
       const noteResponse = await NotesDAO.deleteNote(
-        noteId,
-        userId,
+        note_id,
+        user_id,
       )
       res.json({ status: "success" })
     } catch (e) {

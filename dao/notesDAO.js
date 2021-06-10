@@ -87,12 +87,12 @@ export default class NotesDAO {
         }
       }
     
-      static async deleteNote(noteId, userId) {
+      static async deleteNote(note_id, user_id) {
     
         try {
           const deleteResponse = await notes.deleteOne({
-            _id: ObjectId(noteId),
-            user_id: userId,
+            _id: ObjectId(note_id),
+            user_id: user_id,
           })
     
           return deleteResponse
