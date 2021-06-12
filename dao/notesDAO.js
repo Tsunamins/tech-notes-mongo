@@ -60,10 +60,15 @@ export default class NotesDAO {
 
       static async addNote(user, note, date) {
         try {
-          const noteDoc = { title: user.name,
+          const noteDoc = { 
+              title: note.title,
+              description: note.description,
+              tech_note: note.tech_note,
+              language: note.language,
+              technology: note.technology,
+              type: note.type,
               user_id: user._id,
               date: date,
-              text: note,
               }
     
           return await notes.insertOne(noteDoc)
@@ -73,7 +78,7 @@ export default class NotesDAO {
         }
       }
     
-      static async updateNote(noteId, userId, text, date) {
+      static async updateNote(note_id, user_id, text, date) {
         try {
           const updateResponse = await notes.updateOne(
             { user_id: userId, _id: ObjectId(noteId)},

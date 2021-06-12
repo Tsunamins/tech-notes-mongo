@@ -1,7 +1,7 @@
 import NotesDAO from "../dao/notesDAO.js"
 
 export default class NotesController {
-    static async apiGetNsers(req, res, next) {
+    static async apiGetNotes(req, res, next) {
         const notesPerPage = req.query.notesPerPage ? parseInt(req.query.notesPerPage, 10) : 20
         const page = req.query.page ? parseInt(req.query.page, 10) : 0
     
@@ -32,18 +32,28 @@ export default class NotesController {
       
   static async apiPostNote(req, res, next) {
     try {
+      
+      const title = req.body.title
+      const description = req.body.description
+      const tech_note = req.body.tech_note
+      const language = req.body.language
+      const technology = req.body.technology
+      const tech = req.body.type
       const user_id = req.body.user_id
-      const note = req.body.text
+      const date = new Date()
       // const noteInfo = {
       //   name: req.body.name,
       //   _id: req.body.user_id
       // }
-      const date = new Date()
 
       const NoteResponse = await NotesDAO.addNote(
-     
+        title,
+        description,
+        tech_note,
+        language,
+        technology,
+        tech,
         user_id,
-        note,
         date,
       )
       res.json({ status: "success" })
