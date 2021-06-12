@@ -2,16 +2,17 @@ import UsersDAO from "../dao/usersDAO.js"
 
 export default class UsersController {
     static async apiGetUsers(req, res, next) {
+
       const usersPerPage = req.query.usersPerPage ? parseInt(req.query.usersPerPage, 10) : 20
       const page = req.query.page ? parseInt(req.query.page, 10) : 0
   
       let filters = {}
       if (req.query.username) {
         filters.username = req.query.username
-      } else if (req.query.zipcode) {
-        filters.username = req.query.username
-      } else if (req.query.id) {
-        filters.id = req.query.id
+      } else if (req.query.email) {
+        filters.email = req.query.email
+      } else if (req.query.favorite_tech) {
+        filters.id = req.query.favorite_tech
       }
   
       const { usersList, totalNumUsers } = await UsersDAO.getUsers({
@@ -19,6 +20,7 @@ export default class UsersController {
         page,
         usersPerPage,
       })
+      console.log(req)
   
       let response = {
         users: usersList,
@@ -27,6 +29,7 @@ export default class UsersController {
         entries_per_page: usersPerPage,
         total_results: totalNumUsers,
       }
+      console.log(res)
       res.json(response)
     }
 
@@ -49,16 +52,18 @@ export default class UsersController {
     try {
      
       const username = req.body.username
+      const email = req.body.email
       const favorite_tech = req.body.favorite_tech
       const date = new Date()
 
       const UserResponse = await UsersDAO.addUser(
      
         username,
+        email,
         favorite_tech,
         date,
       )
-      
+
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
@@ -97,11 +102,10 @@ export default class UsersController {
 
   static async apiDeleteUser(req, res, next) {
     try {
-      const userId = req.query.id
-      const userId = req.body.user_id // he adds this as a mock authentication - not a best practice just for building
+      const user_id = req.query.id
       console.log(userId)
       const userResponse = await UsersDAO.deleteUser(
-        userId,
+        
         userId,
       )
       res.json({ status: "success" })
