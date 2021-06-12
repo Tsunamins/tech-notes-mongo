@@ -5,10 +5,12 @@ let users
 export default class UsersDAO {
     static async injectDB(conn) {
       if (users) {
+        console.log(users)
         return
       }
       try { 
         users = await conn.db(process.env.TECHNOTES_NS).collection("users")
+        console.log(users)
       } catch (e) {
         console.error(
           `Unable to establish a collection handle in usersDAO: ${e}`,
@@ -104,13 +106,13 @@ export default class UsersDAO {
             }
           }
 
-          static async addUser(user, user, date) {
+          static async addUser(user, date) {
             try {
-              const userDoc = { user: user.username,
-                  user_id: user._id,
+              const userDoc = { 
+                  username: user.username,
                   date: date,
-                  text: user,
-                   }
+                  favorite_tech: user.favorite_tech,
+              }
         
               return await users.insertOne(userDoc)
             } catch (e) {
@@ -119,11 +121,11 @@ export default class UsersDAO {
             }
           }
         
-          static async updateUser(userId, userId, text, date) {
+          static async updateUser(user_id, favorite_tech, date) {
             try {
               const updateResponse = await users.updateOne(
-                { user_id: userId, _id: ObjectId(userId)},
-                { $set: { text: text, date: date  } },
+                { user_id: user_id, _id: ObjectId(userId)},
+                { $set: { favorite_tech: favorite_tech, date: date  } },
               )
         
               return updateResponse
@@ -133,12 +135,12 @@ export default class UsersDAO {
             }
           }
         
-          static async deleteUser(userId, userId) {
+          static async deleteUser(user_id) {
         
             try {
               const deleteResponse = await users.deleteOne({
-                _id: ObjectId(userId),
-                user_id: userId,
+                _id: ObjectId(user_id),
+                
               })
         
               return deleteResponse

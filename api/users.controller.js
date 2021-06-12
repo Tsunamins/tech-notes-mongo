@@ -48,19 +48,17 @@ export default class UsersController {
   static async apiPostUser(req, res, next) {
     try {
      
-      const user = req.body.text
-      const userInfo = {
-        name: req.body.name,
-        _id: req.body.user_id
-      }
+      const username = req.body.username
+      const favorite_tech = req.body.favorite_tech
       const date = new Date()
 
       const UserResponse = await UsersDAO.addUser(
      
-        userInfo,
-        user,
+        username,
+        favorite_tech,
         date,
       )
+      
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
