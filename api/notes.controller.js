@@ -25,7 +25,7 @@ export default class NotesController {
           page: page,
           filters: filters,
           entries_per_page: notesPerPage,
-          total_results: totalNumUsers,
+          total_results: totalNumNotes,
         }
         res.json(response)
       }
