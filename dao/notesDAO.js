@@ -17,19 +17,19 @@ export default class NotesDAO {
     }
 
     static async getNotes({
-        filters = null, //can add this to filter, pass a filter in to trigger more of the code below for filters
-        page = 0, //page specified if appl, default
-        notesPerPage = 20, //get 20 at a time, default
+        filters = null, 
+        page = 0, 
+        notesPerPage = 20, 
       } = {}) {
         let query
-        //these below will just depend on which filter was passed in
-        if (filters) { //if type of search is requested, i.e. search by name, more on queirying in mongo check resources in vid
+        
+        if (filters) { 
           if ("title" in filters) {
             query = { $text: { $search: filters["title"] } }
           } else if ("description" in filters) {
             query = { "description": { $eq: filters["description"] } }
-          } else if ("note_type" in filters) {
-            query = { "note_type": { $eq: filters["note_type"] } }
+          } else if ("type" in filters) {
+            query = { "type": { $eq: filters["type"] } }
           }
         }
     
