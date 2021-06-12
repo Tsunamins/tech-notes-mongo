@@ -5,12 +5,10 @@ let users
 export default class UsersDAO {
     static async injectDB(conn) {
       if (users) {
-        console.log(users)
         return
       }
       try { 
         users = await conn.db(process.env.TECHNOTES_NS).collection("users")
-        console.log(users)
       } catch (e) {
         console.error(
           `Unable to establish a collection handle in usersDAO: ${e}`,
@@ -18,22 +16,20 @@ export default class UsersDAO {
       }
     }
 
-    // add a general get users, update later as will be searching for specific username, specific id, specific email more often
     static async getUsers({
         filters = null, 
         page = 0,
         usersPerPage = 20, 
       } = {}) {
-
         let query
 
         if (filters) { 
-          if ("name" in filters) {
+          if ("username" in filters) {
             query = { $text: { $search: filters["username"] } }
           } else if ("email" in filters) {
             query = { "email": { $eq: filters["email"] } }
-          } else if ("id" in filters) {
-            query = { "id": { $eq: filters["id"] } }
+          } else if ("favorite_tech" in filters) {
+            query = { "favorite_tech": { $eq: filters["favorite_tech"] } }
           }
         }
 
@@ -110,6 +106,7 @@ export default class UsersDAO {
             try {
               const userDoc = { 
                   username: user.username,
+                  email: user.email,
                   date: date,
                   favorite_tech: user.favorite_tech,
               }
