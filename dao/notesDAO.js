@@ -87,13 +87,32 @@ export default class NotesDAO {
         }
       }
     
-      static async updateNote(note_id, user_id, text, date) {
+      static async updateNote(
+          note_id,
+          user_id,
+          title, 
+          description, 
+          tech_note, 
+          language, 
+          technology, 
+          type, 
+          date
+      ) {
         try {
+          console.log(user_id)
           const updateResponse = await notes.updateOne(
-            { user_id: userId, _id: ObjectId(noteId)},
-            { $set: { text: text, date: date  } },
+            { user_id: ObjectId(user_id), _id: ObjectId(note_id) },
+            { $set: { 
+              title: title, 
+              description: description,
+              tech_note: tech_note,
+              language: language,
+              technology: technology,
+              type: type,
+              date: date
+            } },
+            console.log({ user_id: user_id, _id: ObjectId(note_id) })
           )
-    
           return updateResponse
         } catch (e) {
           console.error(`Unable to update note: ${e}`)
