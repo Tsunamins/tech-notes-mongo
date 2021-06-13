@@ -74,14 +74,16 @@ export default class UsersController {
 
   static async apiUpdateUser(req, res, next) {
     try {
-      const userId = req.body.user_id
-      const text = req.body.text
+      const username = req.body.username
+      const email = req.body.email
+      const favorite_tech = req.body.favorite_tech
       const date = new Date()
 
       const userResponse = await UsersDAO.updateUser(
-        userId,
         req.body.user_id,
-        text,
+        username,
+        email,
+        favorite_tech,
         date,
       )
 

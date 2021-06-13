@@ -120,11 +120,11 @@ export default class UsersDAO {
             }
           }
         
-          static async updateUser(user_id, favorite_tech, date) {
+          static async updateUser(user_id, username, email, favorite_tech, date) {
             try {
               const updateResponse = await users.updateOne(
-                { user_id: user_id, _id: ObjectId(userId)},
-                { $set: { favorite_tech: favorite_tech, date: date  } },
+                {_id: ObjectId(user_id)},
+                { $set: { username: username, email: email, favorite_tech: favorite_tech, date: date  } },
               )
         
               return updateResponse
