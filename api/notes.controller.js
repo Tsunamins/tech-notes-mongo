@@ -62,14 +62,27 @@ export default class NotesController {
 
   static async apiUpdateNote(req, res, next) {
     try {
+      //note that will need to get the current user and current note id
+      //note that will need to pass along existing fields even if they aren't changing or specify items to be passed into set, i.e. if they are null don't set them
       const note_id = req.body.note_id
-      const note = req.body.text
+      const title = req.body.title
+      const description = req.body.description
+      const tech_note = req.body.tech_note
+      const language = req.body.language
+      const technology = req.body.technology
+      const type = req.body.type
       const date = new Date()
+      console.log(note_id)
 
       const noteResponse = await NotesDAO.updateNote(
         note_id,
         req.body.user_id,
-        note,
+        title,
+        description,
+        tech_note,
+        language,
+        technology,
+        type,
         date,
       )
 
