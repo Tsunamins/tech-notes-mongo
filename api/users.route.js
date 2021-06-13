@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.route("/").get(UsersController.apiGetUsers)
       .post(UsersController.apiPostUser)
+      .put(UsersController.apiUpdateUser)
 
 router
   .route("/note")
