@@ -58,16 +58,17 @@ export default class NotesDAO {
         }
       }
 
-      static async addNote(user, note, date) {
+      static async addNote(
+        title, description, tech_note, language, technology, type, user_id, date) {
         try {
           const noteDoc = { 
-              title: note.title,
-              description: note.description,
-              tech_note: note.tech_note,
-              language: note.language,
-              technology: note.technology,
-              type: note.type,
-              user_id: user._id,
+              title: title,
+              description: description,
+              tech_note: tech_note,
+              language: language,
+              technology: technology,
+              type: type,
+              user_id: ObjectId(user_id),
               date: date,
               }
     

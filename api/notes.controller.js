@@ -38,13 +38,10 @@ export default class NotesController {
       const tech_note = req.body.tech_note
       const language = req.body.language
       const technology = req.body.technology
-      const tech = req.body.type
+      const type = req.body.type
       const user_id = req.body.user_id
       const date = new Date()
-      // const noteInfo = {
-      //   name: req.body.name,
-      //   _id: req.body.user_id
-      // }
+      
 
       const NoteResponse = await NotesDAO.addNote(
         title,
@@ -52,10 +49,11 @@ export default class NotesController {
         tech_note,
         language,
         technology,
-        tech,
+        type,
         user_id,
         date,
       )
+      
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
