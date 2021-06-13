@@ -7,6 +7,11 @@ const router = express.Router()
 router.route("/").get(UsersController.apiGetUsers)
       .post(UsersController.apiPostUser)
       .put(UsersController.apiUpdateUser)
+      .delete(UsersController.apiDeleteUser)
+
+router.route("/id/:id").get(UsersController.apiGetUserById)
+
+
 
 router
   .route("/note")
