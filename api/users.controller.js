@@ -53,6 +53,7 @@ export default class UsersController {
      
       const username = req.body.username
       const email = req.body.email
+      const password = req.body.password
       const favorite_tech = req.body.favorite_tech
       const date = new Date()
 
@@ -60,6 +61,7 @@ export default class UsersController {
      
         username,
         email,
+        password,
         favorite_tech,
         date,
       )
