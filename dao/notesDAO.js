@@ -99,7 +99,6 @@ export default class NotesDAO {
           date
       ) {
         try {
-          console.log(user_id)
           const updateResponse = await notes.updateOne(
             { user_id: ObjectId(user_id), _id: ObjectId(note_id) },
             { $set: { 
