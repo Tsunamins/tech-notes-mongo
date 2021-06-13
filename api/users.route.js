@@ -5,6 +5,7 @@ import NotesCtrl from "./notes.controller.js"
 const router = express.Router()
 
 router.route("/").get(UsersController.apiGetUsers)
+      .post(UsersController.apiPostUser)
 
 router
   .route("/note")
