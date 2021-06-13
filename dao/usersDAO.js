@@ -102,13 +102,15 @@ export default class UsersDAO {
             }
           }
 
-          static async addUser(user, date) {
+          static async addUser(username, email, password, favorite_tech, date) {
             try {
               const userDoc = { 
-                  username: user.username,
-                  email: user.email,
+                  username: username,
+                  email: email,
+                  password: password,
+                  favorite_tech: favorite_tech,
                   date: date,
-                  favorite_tech: user.favorite_tech,
+                  
               }
         
               return await users.insertOne(userDoc)
